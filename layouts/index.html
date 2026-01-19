@@ -1,0 +1,27 @@
+{{ define "main" }}
+<h3>Recent Posts</h3>
+
+<ul class="blog-posts">
+  {{/* Pinned posts first */}}
+  {{ range where .Site.RegularPages ".Params.pinned" true }}
+  <li>
+    <span><i>📌</i></span>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+  </li>
+  {{ end }}
+
+  {{/* Then regular posts by date */}}
+  {{ range where .Site.RegularPages ".Params.pinned" "!=" true }}
+  <li>
+    <span>
+      <i>
+        <time datetime='{{ .Date.Format "2006-01-02" }}'>
+          {{ .Date.Format "02 Jan, 2006" }}
+        </time>
+      </i>
+    </span>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+  </li>
+  {{ end }}
+</ul>
+{{ end }}

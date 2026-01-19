@@ -1,0 +1,41 @@
+baseURL = 'https://tefx.one/'
+languageCode = 'en-us'
+title = 'tefx.one'
+theme = 'hugo-bearblog'
+
+[params]
+  author = "Zhaomeng Zhu"
+  description = "Ideas committed by Human. Prose compiled by AI."
+
+  # Dynamic typewriter content
+  # Titles and slogans are paired by index
+  [[params.typewriter]]
+    title = "tefx.one"
+    slogan = "Ideas: Human. Prose: GPU."
+  [[params.typewriter]]
+    title = "/dev/brain"
+    slogan = "Brain the size of a planet. Writing blogs."
+  [[params.typewriter]]
+    title = "stdout"
+    slogan = "Signal: mine. Noise: synthetic."
+  [[params.typewriter]]
+    title = "malloc(thoughts)"
+    slogan = "I think, therefore I prompt."
+  [[params.typewriter]]
+    title = "42"
+    slogan = "The answer is 42. The question is TODO."
+  [[params.typewriter]]
+    title = "Marvin.log"
+    slogan = "Don't Panic. It's just an LLM."
+  [[params.typewriter]]
+    title = "^C"
+    slogan = "Latency between thought and text: 0."
+  [[params.typewriter]]
+    title = ":(){ :|:& };:"
+    slogan = "Compiled with mass hallucination."
+
+[menu]
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/posts/"

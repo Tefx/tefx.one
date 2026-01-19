@@ -1,0 +1,116 @@
+<!-- Typewriter cursor style (Only on Home) -->
+{{ if .IsHome }}
+<style>
+.slogan {
+  margin: 0 0 1em 0;
+  font-size: 0.9em;
+  color: #666;
+  min-height: 1.2em;
+}
+.cursor {
+  animation: blink 1s step-end infinite;
+  font-weight: normal;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+
+<!-- Typewriter script (Inline, Only on Home) -->
+<script>
+(function() {
+  'use strict';
+
+  // Config (slower, more readable)
+  const TYPE_SPEED = 120;          
+  const DELETE_SPEED = 60;         
+  const PAUSE_BEFORE_DELETE = 5000; 
+  const PAUSE_BEFORE_TYPE = 800;   
+
+  // State
+  let currentIndex = 0;
+  let isDeleting = false;
+  let titleEl, sloganEl, data, shuffledIndices;
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function init() {
+    titleEl = document.getElementById('tw-title');
+    sloganEl = document.getElementById('tw-slogan');
+    
+    // Safety check
+    if (!titleEl || !sloganEl) {
+        setTimeout(init, 100);
+        return;
+    }
+
+    const dataEl = document.getElementById('tw-data');
+    if (!dataEl) return;
+    
+    try {
+      data = JSON.parse(dataEl.textContent);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    if (!data || data.length === 0) return;
+
+    shuffledIndices = shuffle([...Array(data.length).keys()]);
+    currentIndex = 0;
+    
+    // Set initial content
+    const firstItem = data[shuffledIndices[currentIndex]];
+    titleEl.textContent = firstItem.title;
+    sloganEl.textContent = firstItem.slogan;
+
+    setTimeout(tick, PAUSE_BEFORE_DELETE);
+  }
+
+  function tick() {
+    const titleText = titleEl.textContent;
+    const sloganText = sloganEl.textContent;
+
+    if (isDeleting) {
+      if (titleText.length > 0 || sloganText.length > 0) {
+        if (sloganText.length > 0) {
+          sloganEl.textContent = sloganText.slice(0, -1);
+        } else {
+          titleEl.textContent = titleText.slice(0, -1);
+        }
+        setTimeout(tick, DELETE_SPEED);
+      } else {
+        isDeleting = false;
+        currentIndex = (currentIndex + 1) % shuffledIndices.length;
+        if (currentIndex === 0) shuffledIndices = shuffle([...Array(data.length).keys()]);
+        setTimeout(tick, PAUSE_BEFORE_TYPE);
+      }
+    } else {
+      const targetTitle = data[shuffledIndices[currentIndex]].title;
+      const targetSlogan = data[shuffledIndices[currentIndex]].slogan;
+
+      if (titleText.length < targetTitle.length) {
+        titleEl.textContent = targetTitle.slice(0, titleText.length + 1);
+        setTimeout(tick, TYPE_SPEED);
+      } else if (sloganText.length < targetSlogan.length) {
+        sloganEl.textContent = targetSlogan.slice(0, sloganText.length + 1);
+        setTimeout(tick, TYPE_SPEED);
+      } else {
+        isDeleting = true;
+        setTimeout(tick, PAUSE_BEFORE_DELETE);
+      }
+    }
+  }
+
+  init();
+})();
+</script>
+{{ end }}

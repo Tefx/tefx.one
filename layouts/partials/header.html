@@ -1,0 +1,20 @@
+<a href="{{ "" | relURL }}" class="title">
+  <h2>
+    {{ if .IsHome }}
+      <span id="tw-title">{{ .Site.Title }}</span><span class="cursor">_</span>
+    {{ else }}
+      {{ .Site.Title }}
+    {{ end }}
+  </h2>
+</a>
+
+{{ if .IsHome }}
+<p class="slogan"><span id="tw-slogan">{{ .Site.Params.description }}</span><span class="cursor">_</span></p>
+
+<!-- Typewriter data from config (Only load on home) -->
+<script type="application/json" id="tw-data">
+[{{ range $i, $item := .Site.Params.typewriter }}{{ if $i }},{{ end }}{"title":"{{ $item.title }}","slogan":"{{ $item.slogan }}"}{{ end }}]
+</script>
+{{ end }}
+
+<nav>{{- partial "nav.html" . -}}</nav>
