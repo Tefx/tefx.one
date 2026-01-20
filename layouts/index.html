@@ -1,27 +1,43 @@
 {{ define "main" }}
-<h3>Recent Posts</h3>
-
-<ul class="blog-posts">
-  {{/* Pinned posts first */}}
-  {{ range where .Site.RegularPages ".Params.pinned" true }}
-  <li>
-    <span><i>📌</i></span>
-    <a href="{{ .Permalink }}">{{ .Title }}</a>
-  </li>
+<div class="terminal-container">
+  
+  {{/* Pinned Section */}}
+  {{ $pinned := where .Site.RegularPages ".Params.pinned" true }}
+  {{ if gt (len $pinned) 0 }}
+  <div class="section-group">
+    <div class="cmd-prompt">
+      <span class="user">tefx</span><span class="at">@</span><span class="host">deep-thought</span>:<span class="path">~/featured</span># ls -l
+    </div>
+    <ul class="terminal-list pinned-list">
+      {{ range $pinned }}
+      <li class="terminal-item">
+        <span class="perms">-rwx------</span>
+        <span class="size">{{ .ReadingTime }}min</span>
+        <span class="date">{{ .Date.Format "Jan 02" }}</span>
+        <a href="{{ .Permalink }}" class="title">{{ .Title }}</a>
+        <span class="badge">PINNED</span>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
   {{ end }}
 
-  {{/* Then regular posts by date */}}
-  {{ range where .Site.RegularPages ".Params.pinned" "!=" true }}
-  <li>
-    <span>
-      <i>
-        <time datetime='{{ .Date.Format "2006-01-02" }}'>
-          {{ .Date.Format "02 Jan, 2006" }}
-        </time>
-      </i>
-    </span>
-    <a href="{{ .Permalink }}">{{ .Title }}</a>
-  </li>
-  {{ end }}
-</ul>
+  {{/* Regular Stream */}}
+  <div class="section-group">
+    <div class="cmd-prompt">
+      <span class="user">tefx</span><span class="at">@</span><span class="host">deep-thought</span>:<span class="path">~/stream</span># ls -t --head=10
+    </div>
+    <ul class="terminal-list">
+      {{ range where .Site.RegularPages ".Params.pinned" "!=" true }}
+      <li class="terminal-item">
+        <span class="perms">-rw-r--r--</span>
+        <span class="size">{{ .ReadingTime }}min</span>
+        <span class="date">{{ .Date.Format "Jan 02" }}</span>
+        <a href="{{ .Permalink }}" class="title">{{ .Title }}</a>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+
+</div>
 {{ end }}
