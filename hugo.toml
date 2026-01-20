@@ -1,4 +1,4 @@
-baseURL = 'https://tefx.one/'
+baseURL = 'https://tefx.github.io/tefx.one/'
 languageCode = 'en-us'
 title = 'tefx.one'
 theme = 'hugo-bearblog'
