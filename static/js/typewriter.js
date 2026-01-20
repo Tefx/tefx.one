@@ -1,27 +1,17 @@
 /**
  * Typewriter Effect for tefx.one
- * Lightweight (<1KB gzip), no dependencies
- * 
- * Config:
- * - Cursor: underscore (_)
- * - First load: random
- * - Loop order: random (shuffle)
+ * Double-buffered to avoid empty gap
  */
 (function() {
   'use strict';
 
-  // Config
-  const TYPE_SPEED = 80;      // ms per character when typing
-  const DELETE_SPEED = 40;    // ms per character when deleting
-  const PAUSE_BEFORE_DELETE = 3000;  // ms to wait before deleting
-  const PAUSE_BEFORE_TYPE = 500;     // ms to wait before typing next
+  const TYPE_SPEED = 120;
+  const DELETE_SPEED = 60;
+  const PAUSE_BEFORE_SWITCH = 3000;
 
-  // State
   let currentIndex = 0;
-  let isDeleting = false;
-  let titleEl, sloganEl, data, shuffledIndices;
+  let titleEl, sloganEl, data, order;
 
-  // Fisher-Yates shuffle
   function shuffle(arr) {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -32,94 +22,82 @@
   }
 
   function init() {
-    console.log('Typewriter: Init started');
     titleEl = document.getElementById('tw-title');
     sloganEl = document.getElementById('tw-slogan');
-    
-    if (!titleEl || !sloganEl) {
-        console.error('Typewriter: Elements not found', {titleEl, sloganEl});
-        return;
-    }
+    if (!titleEl || !sloganEl) return;
 
-    // Parse data from script tag
     const dataEl = document.getElementById('tw-data');
-    if (!dataEl) {
-        console.error('Typewriter: Data element not found');
-        return;
-    }
-    
+    if (!dataEl) return;
+
     try {
       data = JSON.parse(dataEl.textContent);
     } catch (e) {
-      console.error('Typewriter: Failed to parse data', e);
       return;
     }
 
     if (!data || data.length === 0) return;
 
-    // Create shuffled order
-    shuffledIndices = shuffle([...Array(data.length).keys()]);
-    currentIndex = 0;  // Index into shuffledIndices
-    
-    // Set initial content (first random item)
-    const firstItem = data[shuffledIndices[currentIndex]];
-    titleEl.textContent = firstItem.title;
-    sloganEl.textContent = firstItem.slogan;
+    order = shuffle([...Array(data.length).keys()]);
+    currentIndex = 0;
 
-    // Start the loop after initial pause
-    setTimeout(tick, PAUSE_BEFORE_DELETE);
+    const first = data[order[currentIndex]];
+    titleEl.textContent = first.title;
+    sloganEl.textContent = first.slogan;
+
+    setTimeout(() => startSwitch(), PAUSE_BEFORE_SWITCH);
   }
 
-  function tick() {
-    const realIndex = shuffledIndices[currentIndex];
-    const current = data[realIndex];
-    const titleText = titleEl.textContent;
-    const sloganText = sloganEl.textContent;
+  function startSwitch() {
+    const nextIndex = (currentIndex + 1) % order.length;
+    const next = data[order[nextIndex]];
 
-    if (isDeleting) {
-      // Delete phase: remove characters
-      if (titleText.length > 0 || sloganText.length > 0) {
-        // Delete slogan first, then title
-        if (sloganText.length > 0) {
-          sloganEl.textContent = sloganText.slice(0, -1);
-        } else {
-          titleEl.textContent = titleText.slice(0, -1);
-        }
-        setTimeout(tick, DELETE_SPEED);
-      } else {
-        // Done deleting, move to next
-        isDeleting = false;
-        currentIndex = (currentIndex + 1) % shuffledIndices.length;
-        
-        // Reshuffle when we've gone through all items
-        if (currentIndex === 0) {
-          shuffledIndices = shuffle([...Array(data.length).keys()]);
-        }
-        
-        setTimeout(tick, PAUSE_BEFORE_TYPE);
-      }
-    } else {
-      // Type phase: add characters
-      const targetTitle = data[shuffledIndices[currentIndex]].title;
-      const targetSlogan = data[shuffledIndices[currentIndex]].slogan;
+    deleteText(() => {
+      typeText(next.title, next.slogan, () => {
+        currentIndex = nextIndex;
+        if (currentIndex === 0) order = shuffle([...Array(data.length).keys()]);
+        setTimeout(() => startSwitch(), PAUSE_BEFORE_SWITCH);
+      });
+    });
+  }
 
-      if (titleText.length < targetTitle.length) {
-        // Type title first
-        titleEl.textContent = targetTitle.slice(0, titleText.length + 1);
-        setTimeout(tick, TYPE_SPEED);
-      } else if (sloganText.length < targetSlogan.length) {
-        // Then type slogan
-        sloganEl.textContent = targetSlogan.slice(0, sloganText.length + 1);
-        setTimeout(tick, TYPE_SPEED);
+  function deleteText(done) {
+    let t = titleEl.textContent;
+    let s = sloganEl.textContent;
+
+    function step() {
+      if (s.length > 0) {
+        s = s.slice(0, -1);
+        sloganEl.textContent = s;
+        setTimeout(step, DELETE_SPEED);
+      } else if (t.length > 0) {
+        t = t.slice(0, -1);
+        titleEl.textContent = t;
+        setTimeout(step, DELETE_SPEED);
       } else {
-        // Done typing, pause then delete
-        isDeleting = true;
-        setTimeout(tick, PAUSE_BEFORE_DELETE);
+        done();
       }
     }
+    step();
   }
 
-  // Initialize when DOM is ready
+  function typeText(title, slogan, done) {
+    let ti = 0;
+    let si = 0;
+
+    function step() {
+      if (ti < title.length) {
+        titleEl.textContent = title.slice(0, ++ti);
+        setTimeout(step, TYPE_SPEED);
+      } else if (si < slogan.length) {
+        sloganEl.textContent = slogan.slice(0, ++si);
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        done();
+      }
+    }
+    step();
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
