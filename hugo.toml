@@ -8,7 +8,6 @@ theme = 'hugo-bearblog'
   description = "Ideas committed by Human. Prose compiled by AI."
 
   # Dynamic typewriter content
-  # Titles and slogans are paired by index
   [[params.typewriter]]
     title = "tefx.one"
     slogan = "Ideas: Human. Prose: GPU."
@@ -36,6 +35,6 @@ theme = 'hugo-bearblog'
 
 [menu]
   [[menu.main]]
-    identifier = "blog"
-    name = "Blog"
-    url = "/posts/"
+    identifier = "rss"
+    name = "RSS"
+    url = "/index.xml"

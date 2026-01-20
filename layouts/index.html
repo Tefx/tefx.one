@@ -22,10 +22,10 @@
   </div>
   {{ end }}
 
-  {{/* Regular Stream */}}
+  {{/* Regular Stream - All posts */}}
   <div class="section-group">
     <div class="cmd-prompt">
-      <span class="user">tefx</span><span class="at">@</span><span class="host">deep-thought</span>:<span class="path">~/stream</span># ls -t --head=10
+      <span class="user">tefx</span><span class="at">@</span><span class="host">deep-thought</span>:<span class="path">~/stream</span># ls -t
     </div>
     <ul class="terminal-list">
       {{ range where .Site.RegularPages ".Params.pinned" "!=" true }}
