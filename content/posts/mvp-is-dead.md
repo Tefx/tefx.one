@@ -1,5 +1,5 @@
 ---
-title: "Stop Lying to Your Agent: The MVP Is Dead"
+title: "The MVP Trap in AI-Assisted Coding"
 date: 2026-01-20
 tags: ["Agentic Coding", "Engineering Strategy", "AI Architecture", "Systems Thinking"]
 categories: ["Engineering"]
