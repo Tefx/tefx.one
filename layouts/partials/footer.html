@@ -1,0 +1,42 @@
+<p class="social-links">
+  <a href="https://github.com/Tefx" target="_blank" rel="noopener">GitHub</a>
+  <span class="separator">/</span>
+  <a href="https://www.linkedin.com/in/zhuzhaomeng/" target="_blank" rel="noopener">LinkedIn</a>
+  <span class="separator">/</span>
+  <a href="/index.xml" target="_blank">RSS</a>
+</p>
+<p class="copyright">
+  © {{ now.Year }} {{ .Site.Params.author }}. 
+  {{ if not (.Param "hideMadeWithLine") }}Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>{{ end }}
+</p>
+
+<style>
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px dashed rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+  text-align: center; /* Center align for footer */
+}
+@media (prefers-color-scheme: dark) {
+  footer { border-top-color: rgba(255,255,255,0.1); }
+}
+.social-links {
+  margin-bottom: 0.5rem;
+}
+.social-links a {
+  font-weight: bold;
+  border-bottom: none;
+}
+.social-links a:hover {
+  text-decoration: underline;
+}
+.separator {
+  margin: 0 0.5rem;
+  opacity: 0.5;
+}
+.copyright {
+  opacity: 0.6;
+  font-size: 0.8rem;
+}
+</style>

@@ -1,6 +1,6 @@
 ---
 title: "Hello World (and thanks, GPU)"
-pinned: true
+pinned: false
 date: 2026-01-20T00:00:00+08:00
 draft: false
 tags: ["meta", "ai", "thoughts"]
