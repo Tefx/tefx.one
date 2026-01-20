@@ -1,6 +1,6 @@
 ---
 title: "The MVP Trap in AI-Assisted Coding"
-date: 2026-01-20
+date: 2026-01-21T00:00:00+08:00
 tags: ["Agentic Coding", "Engineering Strategy", "AI Architecture", "Systems Thinking"]
 categories: ["Engineering"]
 pinned: true
