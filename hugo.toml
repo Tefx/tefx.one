@@ -1,5 +1,6 @@
-baseURL = 'https://tefx.github.io/tefx.one/'
+baseURL = 'https://tefx.one/'
 languageCode = 'en-us'
+timeZone = 'Asia/Singapore'
 title = 'tefx.one'
 theme = 'hugo-bearblog'
 
