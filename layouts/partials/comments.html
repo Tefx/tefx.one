@@ -1,0 +1,37 @@
+<section id="comments-section" style="margin-top: 3rem; border-top: 1px dashed var(--accent); padding-top: 2rem;">
+  <div class="giscus"></div>
+</section>
+
+<script>
+  (function() {
+    // Dynamic theme selector: Nord for dark mode (perfect match), Light for light mode
+    const getTheme = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'nord' : 'light';
+
+    const script = document.createElement('script');
+    script.src = "https://giscus.app/client.js";
+    script.dataset.repo = "Tefx/tefx.one";
+    script.dataset.repoId = "R_kgDOQ9A61w";
+    script.dataset.category = "Announcements";
+    script.dataset.categoryId = "DIC_kwDOQ9A6184C1Pir";
+    script.dataset.mapping = "pathname";
+    script.dataset.strict = "0";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    script.async = true;
+    
+    // Inject the script
+    document.getElementById('comments-section').appendChild(script);
+
+    // Listen for system theme changes and update Giscus
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const iframe = document.querySelector('iframe.giscus-frame');
+      if (!iframe) return;
+      const newTheme = e.matches ? 'nord' : 'light';
+      iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: newTheme } } }, 'https://giscus.app');
+    });
+  })();
+</script>

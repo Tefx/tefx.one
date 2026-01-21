@@ -5,6 +5,9 @@
     <time datetime='{{ .Date.Format "2006-01-02" }}'>
       {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
     </time>
+    <span id="busuanzi_container_page_pv" style="display: none;">
+      · <span id="busuanzi_value_page_pv"></span> Views
+    </span>
   </i>
 </p>
 
@@ -21,4 +24,6 @@
   <a href="{{ .Permalink }}">#{{ .LinkTitle }}</a>
   {{ end }}
 </p>
+
+{{ partial "comments.html" . }}
 {{ end }}
