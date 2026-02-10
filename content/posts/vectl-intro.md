@@ -1,6 +1,6 @@
 ---
 title: "TODO.md Must Die: Introducing vectl"
-date: 2026-02-11T10:00:00+08:00
+date: 2026-02-11T02:00:00+08:00
 draft: false
 tags: ["Agentic Workflow", "Tools", "Engineering Strategy", "vectl"]
 categories: ["Open Source"]
