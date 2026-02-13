@@ -22,7 +22,7 @@ This stack is built on **OpenCode** (system prompt, compaction, MCP, plugins), b
 
 ---
 
-For the past year, as Head of Engineering, I barely touched code. My calendar was consumed by meetings and coordination. Writing code drifted further and further away—until vibe coding pulled me back.
+For the past year, I barely touched code. My calendar was consumed by meetings and coordination. Writing code drifted further and further away—until vibe coding pulled me back.
 
 But this time, I didn't open an IDE. I opened a terminal with a squad of agents running inside it.
 
