@@ -39,24 +39,25 @@ The real bottleneck is **Agent Management**. When you orchestrate multiple agent
 
 My current state: **Zero keystrokes of code.** I don't even perform traditional Code Reviews. Agents generate the implementation; agents cross-verify the results. My role has shifted from **Reviewer** to **Process Engineer**—I don't patch the code; I patch the process that generates the code.
 
-Here is the system I've built.
+Here is the system I've built, and more importantly, the pain that forced me to build it.
 
 ## §1 Evolution: From Copilot to Autopilot
 
-The Timeline:
+The transition wasn't linear; it was a series of frustrations.
 
-1.  **Pre-2025**: Using IDE extensions like Cursor. I was still writing code; AI was auto-completing it.
+1.  **Pre-2025 (The Copilot Era)**: Using IDE extensions like Cursor. I was still writing code; AI was just a smarter autocomplete.
+    *   *The Friction*: I wanted to refactor a messy module, but the AI lost context after 3 files. I found myself pasting snippets back and forth. I was a **secretary for the LLM**.
 2.  **Claude Code (Late 2025)**: The inflection point. With the release of **Claude Opus 4.5, GPT 5.2, and Gemini 3 Pro**, model capabilities finally crossed the "fully managed" threshold. **I closed my IDE and started coding exclusively through agents.**
-3.  **OpenCode + oh-my-opencode**: Switched to open-source solutions.
-4.  **Custom Stack**: Abandoned `oh-my-opencode` to build a bespoke system prompt and toolchain on top of **Vanilla OpenCode**.
+3.  **OpenCode + oh-my-opencode**: I switched to open-source solutions to gain control.
+    *   *The Friction*: I spent a week fighting with `oh-my-opencode`'s default prompts. The agent kept asking for permission to run `ls`. It was polite, but I needed it to be efficient.
+    *   **Key Insight**: **It was someone else's habit.** Agent management is deeply personal. Another person's "best practice" is often your friction.
+4.  **Custom Stack**: I abandoned the frameworks and built a bespoke system prompt and toolchain on top of **Vanilla OpenCode**.
 
-The core reason for abandoning `oh-my-opencode`: **It was someone else's habit.** Agent management is deeply personal. Another person's "best practice" is often your friction.
-
-**Key Insight**: The moment you start writing system prompts for an agent, you represent a promotion. You are no longer a user; **you are a Manager.**
+The moment you start writing system prompts for an agent, you represent a promotion. You are no longer a user; **you are a Manager.**
 
 ## §2 Infrastructure: The Stack
 
-### System Prompt
+### System Prompt: The Autonomy Engine
 
 I rarely use the default `plan` or `build` modes in OpenCode. I use my own agents. My system prompt enforces one principle: **High Autonomy, Fast Verification**. Agents should make decisions, verify results, and only pause for irreversible actions or high ambiguity.
 
@@ -216,7 +217,12 @@ I only install 5 MCP tools. Not because of a lack of options, but because **ever
 
 ### vectl: The End of `TODO.md`
 
-I wrote `vectl` to solve a specific problem. Before it, I managed plans in Markdown. On one large project, the plan grew to **10,000+ lines**. Every time the agent read the plan, it burned tokens reading 95% completed history. Worse, compliance was low—the agent treated it as a suggestion, not a rule.
+I wrote `vectl` because Markdown failed me.
+
+On one large project, my `TODO.md` grew to **10,000+ lines**. It became a graveyard of checkmarks.
+*   **Token Burn**: Every request, the agent read 9,500 lines of completed history.
+*   **Hallucination**: The agent would sometimes "uncheck" a box, or worse, decide to re-implement a completed feature because it misinterpreted the notes.
+*   **Compliance**: The agent treated the plan as a *suggestion*.
 
 `vectl` transforms the plan from a passive text file into an **active state machine**. When the agent asks "What's next?", `vectl` returns *only* the currently actionable steps (usually 20-50 lines). The agent must `claim` a step (locking it) and submit `evidence` to complete it. Steps with unsatisfied dependencies **do not exist** to the agent.
 
@@ -238,7 +244,7 @@ OpenCode offers two extension methods: **Skills** (static knowledge/instruction 
 
 **Skills are currently hyped**, but I rarely use them.
 
-This isn't a theoretical objection—it's empirical. In my experience, **Skills load inconsistently, and agent compliance is probabilistic.**
+This isn't a theoretical objection—it's empirical. In my experience, **Skills load inconsistently, and agent compliance is probabilistic.** The LLM *might* follow the skill instructions, or it might hallucinate that it knows better.
 
 In contrast, when I explicitly `@mention` a Sub-agent, it **guarantees** the loading of that agent's system prompt. Compliance shifts from "maybe" to "definitely".
 
@@ -257,7 +263,7 @@ I maintain **16 global agents**. Each has a rigorous definition (200-600 lines) 
 
 ### The Meta-Agents
 
-Two agents are critical because they help me build and optimize the others:
+Two agents are critical because they help me build and optimize the others. They provide the "Adult Supervision" in the room.
 
 #### `architect`: The Designer
 
@@ -369,7 +375,7 @@ In one project, I implemented extreme separation:
 | **Gate Reviewer** | `Pyloros` | 4-Expert Model. Spawns isolated sub-agents for architecture review to prevent anchoring bias. |
 | **Design Reviewer** | `Kritikos` | Reviews `Demiurge`'s output. Consults `@se-expert` and `@se-radical`. |
 
-The `Blind Tester` is the highlight: If it accidentally reads `src/`, it has failed its primary directive. This level of separation is expensive for humans but free for agents.
+The `Blind Tester` is the highlight. I treat it like a double-blind scientific study. **If the QA agent reads `src/`, it has failed its primary directive.** It must test the *contract*, not the *implementation*. This level of separation is expensive for humans but free for agents.
 
 ### I Do Not Review Code
 
@@ -388,9 +394,17 @@ I fix the **Process**—by updating `AGENTS.md`, adding a git hook, or inserting
 
 ### Adversarial Debates
 
-I created diametrically opposed agents to debate architectural decisions:
+I created diametrically opposed agents to debate architectural decisions. This is not a gimmick; it's how I break decision paralysis.
 
 **`se-expert` (Aristotle)** vs. **`se-radical` (Heraclitus)**
+
+**The Scenario**: I needed to refactor a legacy Authentication module.
+
+> **Me**: "Should we refactor Auth?"
+>
+> **Aristotle**: "The current module has run in production for 6 months with zero incidents. Refactoring introduces unnecessary regression risk. Suggest wrapping it in an adapter."
+>
+> **Heraclitus**: "The code is rotting. It relies on deprecated libraries and doesn't support the new multi-tenant requirement. An adapter is just putting lipstick on a pig. Burn it down. Rewrite it."
 
 <details>
 <summary>Core Belief Comparison</summary>
@@ -408,7 +422,7 @@ I created diametrically opposed agents to debate architectural decisions:
 
 </details>
 
-I `@` both in the conversation. Their disagreement point is usually where **human judgment** is actually required.
+I `@` both in the conversation. Their disagreement point is usually where **human judgment** is actually required. (In the end, I sided with Heraclitus, but forced him to use Aristotle's test suite).
 
 ### Multi-Agent Consensus
 
@@ -438,7 +452,9 @@ For UI work:
 
 ### Zero Keystrokes
 
-This is not a manifesto; it is an operational fact. Code, config, docs—all generated. My input is high-level intent, spec review, and verification. Understanding code is still required (to be a Process Engineer), but *typing* it is not.
+This is not a manifesto; it is an operational fact. Code, config, docs—all generated. My input is high-level intent, spec review, and verification.
+
+**Correction**: "Zero Keystrokes" doesn't mean my hands are idle. My keyboard activity has shifted from *typing code* to *typing git commands, vectl commands, and review comments*. I am still very busy, but I'm busy operating the machine, not being the machine.
 
 ### Sleep Setup, Wake Review
 
@@ -475,7 +491,7 @@ You will go through these emotional stages:
 
 1.  **The Awe**: You build a feature in minutes. You feel invincible.
 2.  **The Disappointment**: You realize the feature is buggy, incomplete, and brittle.
-3.  **The Rage**: You try to "fix" the agent. It refuses to listen. It loops. You want to scream "I could have written this faster myself!"
+3.  **The Rage**: You try to "fix" the agent. It refuses to listen. It loops. You stare at the screen, shouting "I could have written this faster myself!" You watch it delete the same file three times. You question your life choices.
 4.  **The "Click" Moment**: You stop trying to fix the code manually. You start asking "Why didn't it understand?" You adjust the constraints. You split the task. Suddenly, the gears mesh. It works. You didn't write a line of code.
 5.  **The Flow**: You stop being a coder. You become a Commander.
 
