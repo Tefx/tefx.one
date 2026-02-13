@@ -239,11 +239,11 @@ I'm actually considering removing Serena—its 20+ tool methods consume signific
 
 ### Skills vs Sub-agents: I Choose Determinism
 
-I rarely use Skills. I create sub-agents instead.
+Skills are genuinely hot right now—and for good reason. They're a clean way to inject reusable knowledge across agents. But I rarely use them. I create sub-agents instead.
 
 The reason is simple: for me, Skill loading and compliance is probabilistic—the LLM might follow the skill instructions, or it might "improve" them on its own. But when I manually switch to or `@mention` a sub-agent, its full system prompt is guaranteed to load.
 
-This is purely personal preference. If Skills work reliably for you, no need to copy me. I'm just reporting my bias.
+This is purely personal preference and habit. Skills may well be the right tool for you—I'm just sharing what I gravitated toward and why.
 
 As a daily habit, I have one simple rule: any repetitive task that takes more than 30 minutes gets its own dedicated agent. Not just coding—RSS daily tracking, targeted technical research, team weekly report aggregation, even this blog post are all agent-driven. I currently maintain **16 global agents**, each with a 200–600 line definition (including system prompt, behavioral constraints, and output contracts).
 
