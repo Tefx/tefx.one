@@ -322,7 +322,13 @@ details > *:not(summary) {
 details > div.highlight, details > pre {
   margin-left: 0 !important;
   margin-right: 0 !important;
+  margin-top: 0 !important;
   border-radius: 0 0 8px 8px !important;
+}
+
+/* Hide traffic light dots inside details blocks */
+details div.highlight::before, details pre::before {
+  content: none !important;
 }
 
 /* --- Tables --- */

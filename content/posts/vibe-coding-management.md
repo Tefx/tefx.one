@@ -22,6 +22,17 @@ This stack is built on **OpenCode** (system prompt, compaction, MCP, plugins), b
 
 ---
 
+### Table of Contents
+
+- [Chapter 1: Reclaiming Control — Why I Built Everything Myself](#chapter-1-reclaiming-control--why-i-built-everything-myself)
+- [Chapter 2: Process Engineering — Spec, Plan, vectl](#chapter-2-process-engineering--spec-plan-vectl)
+- [Chapter 3: Virtualizing the Org Chart — Roles, Debates, Meta-Agents](#chapter-3-virtualizing-the-org-chart--roles-debates-meta-agents)
+- [Chapter 4: Operating Philosophy — I Fix the Process, Not the Code](#chapter-4-operating-philosophy--i-fix-the-process-not-the-code)
+- [Chapter 5: Field Notes — Tools, Models, and What's Next](#chapter-5-field-notes--tools-models-and-whats-next)
+- [The Learning Curve](#the-learning-curve)
+
+---
+
 For the past year, I barely touched code. My calendar was consumed by meetings and coordination. Writing code drifted further and further away—until vibe coding pulled me back.
 
 But this time, I didn't open an IDE. I opened a terminal with a squad of agents running inside it.
