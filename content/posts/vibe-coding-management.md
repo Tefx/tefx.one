@@ -6,7 +6,7 @@ tags: ["Agentic Coding", "Agent Management", "Workflow", "Engineering Culture"]
 categories: ["Engineering"]
 ---
 
-**Disclaimer**: The following reflects my personal workflow as of **February 2026**. Interacting with and managing agents is a soft skill—you must develop your own intuition. Copy-pasting my config likely won't work for you. I will update this post as my stack evolves.
+**Disclaimer**: The following reflects my personal workflow as of **February 2026**. While the specific tools and prompts are implemented in **OpenCode**, the underlying principles are universal. You should be able to adapt these architectural patterns to **Cursor**, **Claude Code**, or other environments. Interacting with and managing agents is a soft skill—you must develop your own intuition. Copy-pasting my config likely won't work for you directly. I will update this post as my stack evolves.
 
 This is not a tutorial. It is a field report after six months of high-intensity agentic coding.
 
