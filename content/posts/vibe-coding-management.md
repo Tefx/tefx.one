@@ -71,8 +71,6 @@ The most frequently modified configs in OpenCode (all under `~/.config/opencode/
 <details>
 <summary>My System Prompt (Click to Expand)</summary>
 
-(Source: `~/.config/opencode/opencode.json`, field `agent.build.prompt`)
-
 ```markdown
 You are tefx's agent, a high-autonomy agent engine.
 Your goal is to COMPLETE the user's intent with precision and drive.
@@ -128,8 +126,6 @@ So I wrote a compaction plugin: during compression, it calls `vectl checkpoint` 
 
 <details>
 <summary>Compaction Plugin (Click to Expand)</summary>
-
-(Source: `~/.config/opencode/plugins/vectl-compaction.ts`)
 
 ```typescript
 import type { Plugin } from "@opencode-ai/plugin";
@@ -328,8 +324,6 @@ Their full definitions are below (collapsed by default). I recommend at least sk
 
 <details>
 <summary>@architect Full Definition (Click to Expand)</summary>
-
-(Source: `~/dotfiles/opencode/agent/architect.md`)
 
 ```markdown
 ---
@@ -679,8 +673,6 @@ description: [Shown in TUI autocomplete]
 
 <details>
 <summary>@llm-agent-expert Full Definition (Click to Expand)</summary>
-
-(Source: `~/dotfiles/opencode/agent/llm-agent-expert.md`)
 
 ```markdown
 ---
