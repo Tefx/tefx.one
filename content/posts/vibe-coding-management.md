@@ -8,11 +8,11 @@ categories: ["Engineering"]
 
 **Disclaimer**: The following reflects my personal workflow as of **February 2026**. While the specific tools and prompts are implemented in **OpenCode**, the underlying principles are universal. You should be able to adapt these architectural patterns to **Cursor**, **Claude Code**, or other environments. Interacting with and managing agents is a soft skill—you must develop your own intuition. Copy-pasting my config likely won't work for you directly. I will update this post as my stack evolves.
 
-This is not a tutorial. It is a field report after six months of high-intensity agentic coding.
+This is not a tutorial. It is a field report summarizing my high-intensity agentic coding journey from **Christmas 2025 to Chinese New Year 2026**.
 
 ### Key Takeaways
 
-*   **Role Shift**: Move from **Code Reviewer** to **Process Engineer**. Don't fix code; fix the system that generates it.
+*   **Mindset Shift**: Don't fix code; fix the system that generates it.
 *   **Tooling**: Generic tools fail at scale. Build bespoke agents and CLIs (like `vectl`) that fit your specific cognitive workflow.
 *   **Management**: Agent orchestration is a soft skill. You must burn tokens to develop your own intuition for it.
 *   **Architecture**: Enforce strict separation of concerns (Architect vs Engineer vs QA) to prevent self-validating hallucinations.
@@ -37,7 +37,7 @@ These are tactics, not strategy.
 
 The real bottleneck is **Agent Management**. When you orchestrate multiple agents to build complex engineering systems, the challenge shifts from "how to write a prompt" to "how to manage a team of synthetic engineers." No one can teach you this skill because everyone's cognitive interface with AI is unique.
 
-My current state: **Zero keystrokes of code.** I don't even perform traditional Code Reviews. Agents generate the implementation; agents cross-verify the results. My role has shifted from **Reviewer** to **Process Engineer**—I don't patch the code; I patch the process that generates the code.
+My current state: **Zero keystrokes of code.** I don't even perform traditional Code Reviews. Agents generate the implementation; agents cross-verify the results. I don't patch the code; I patch the process that generates the code.
 
 Here is the system I've built, and more importantly, the pain that forced me to build it.
 
