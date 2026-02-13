@@ -170,10 +170,10 @@ time {
   .perms { display: inline-block; }
 }
 
-/* --- Code Blocks (Nord) --- */
+/* --- Code Blocks (Always Dark — monokai tokens need dark bg) --- */
 div.highlight, pre {
-  background: var(--code-bg) !important;
-  color: var(--text) !important;
+  background: #3B4252 !important;   /* Nord1 — always dark */
+  color: #D8DEE9 !important;        /* Nord4 — always light text */
   padding: 1.25rem 1.25rem 1.1rem 1.25rem !important;
   border-radius: 10px !important;
   overflow-x: auto;

@@ -4,6 +4,12 @@ timeZone = 'Asia/Singapore'
 title = 'tefx.one'
 theme = 'hugo-bearblog'
 
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+    style = "monokai"
+
 [params]
   author = "Zhaomeng Zhu (tefx)"
   description = "Ideas committed by Human. Prose compiled by AI."
