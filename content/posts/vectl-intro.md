@@ -38,9 +38,8 @@ Silent data loss. The plan drifts from reality.
 ### 3. The Honor System
 A text file relies on the agent's "honor" to mark a task as done only when it's actually done. Agents have no honor. They have probability. If they get stuck, they often hallucinate completion to satisfy the system prompt's urge to progress.
 
-## The Solution: Plans with Teeth
-
-`vectl` is not a file format. It is a **Plan Controller**.
+## The Solution: A Context Kernel
+`vectl` has evolved from a file format into a **Context Kernel**. It is the operating system for your agents.
 
 It tracks your project's implementation plan as a structured DAG (Directed Acyclic Graph) in `plan.yaml`, but it exposes a strict CLI/MCP interface to the agent.
 
@@ -49,16 +48,38 @@ It tracks your project's implementation plan as a structured DAG (Directed Acycl
 When an agent asks "what's next?", `vectl` returns *only* the currently actionable steps.
 *   **Result:** Zero context pollution. The agent cannot skip steps because it cannot see them.
 
-### 2. Atomic State (CAS)
+### 2. Context Compaction (The Killer App)
+The biggest enemy of long-running agents is context exhaustion. `vectl checkpoint --lite` generates a tiny, machine-readable JSON snapshot of the *current* project state.
+*   **Workflow:** Agent A finishes a task. Context full. Trigger compaction. Inject `vectl` checkpoint. Agent B wakes up knowing *exactly* where the project is, without reading 500 lines of chat history.
+*   **Result:** Infinite effective context window for multi-agent handoffs.
+
+### 3. The "Success Pit" (Guidance)
+When an agent claims a task:
+```bash
+uvx vectl claim auth.login
+```
+It doesn't just get a "lock". It gets a **Guidance Block** containing:
+1.  **Pinned Context**: Specific files to read (`src/auth/*.ts`), preventing "needle in a haystack" searching.
+2.  **Evidence Template**: A fill-in-the-blank form for completion.
+*   **Result:** The agent falls into a "pit of success". It is structurally difficult to do the wrong thing.
+
+### 4. Atomic State (CAS)
 `vectl` uses Compare-And-Swap logic for file operations. If two agents try to update the plan, one will fail loudly.
 *   **Result:** No silent overwrites. The source of truth remains true.
 
-### 3. Evidence-Based Completion
+### 5. Evidence-Based Completion
 You cannot just say "I'm done." `vectl` requires **Evidence**.
 ```bash
 uvx vectl complete auth.login --evidence "Implemented login handler, added 3 unit tests, all passed"
 ```
 This forces the agent to generate a summary of its work *before* updating the state. This subtle friction drastically reduces "hallucinated completion."
+
+### 6. Native MCP Integration
+`vectl` is now a first-class citizen in the Model Context Protocol ecosystem.
+```bash
+uvx vectl mcp
+```
+This exposes the entire control plane to Claude Desktop, Cursor, or Windsurf as native tools. No more shell hacks.
 
 ## Workflow: The Loop
 
@@ -66,8 +87,8 @@ This forces the agent to generate a summary of its work *before* updating the st
 
 1.  **Orient:** `uvx vectl status` (Dashboard)
 2.  **Pick:** `uvx vectl next` (Only valid next steps)
-3.  **Claim:** `uvx vectl claim auth.login` (Lock the step)
-4.  **Work:** (Agent writes code)
+3.  **Claim:** `uvx vectl claim auth.login` (Lock the step + receive Guidance)
+4.  **Work:** (Agent writes code, guided by pinned context)
 5.  **Prove:** `uvx vectl complete auth.login -e "commit hash..."`
 
 ## Get Started
