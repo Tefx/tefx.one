@@ -233,3 +233,159 @@ pre code {
   padding: 0 !important;
   color: inherit !important;
 }
+
+/* --- Article Body Reading Enhancements --- */
+
+/* Chapter separators — h2 gets extra breathing room */
+article h2 {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(136, 192, 208, 0.25);
+}
+
+article h2:first-of-type {
+  margin-top: 2rem;
+  border-top: none;
+}
+
+/* h3 section spacing */
+article h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Paragraphs — slightly tighter for long-form */
+article p {
+  margin-bottom: 1.15em;
+}
+
+/* --- Blockquotes (Dialogue Style) --- */
+blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  background: rgba(136, 192, 208, 0.06);
+  border-radius: 0 6px 6px 0;
+}
+
+blockquote p {
+  margin-bottom: 0.6em;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Details/Summary (Collapsible Blocks) --- */
+details {
+  margin: 1.5rem 0;
+  border: 1px solid rgba(136, 192, 208, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+summary {
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(136, 192, 208, 0.06);
+  transition: background 0.2s ease;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "▸ ";
+  display: inline;
+  transition: transform 0.2s ease;
+}
+
+details[open] > summary::before {
+  content: "▾ ";
+}
+
+summary:hover {
+  background: rgba(136, 192, 208, 0.12);
+}
+
+details > *:not(summary) {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+details > div.highlight, details > pre {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: 0 0 8px 8px !important;
+}
+
+/* --- Tables --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+
+th {
+  text-align: left;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-weight: 700;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(136, 192, 208, 0.15);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Images (napkin diagram etc.) --- */
+article img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2rem auto;
+  display: block;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  article img {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+}
+
+/* --- Strong emphasis in prose --- */
+article p strong, article li strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  article p strong, article li strong {
+    color: #88C0D0;
+  }
+}
+
+/* --- Horizontal rules --- */
+article hr {
+  border: none;
+  height: 1px;
+  background: rgba(136, 192, 208, 0.25);
+  margin: 2.5rem 0;
+}

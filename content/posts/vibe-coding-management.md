@@ -14,11 +14,11 @@ This stack is built on **OpenCode** (system prompt, compaction, MCP, plugins), b
 
 ### TL;DR
 
-- I rarely use OpenCode's built-in `plan`/`build` modes. I create task-specific agents for each project (takes minutes), write plans into `vectl`, and put technical details in Spec Markdown files.
-- I don't write implementation code and don't do code review. I look at test results, coverage, and cross-agent verification. When results are poor, I trace root causes and fix the process.
-- I rarely use Skills; I create sub-agents instead. For me, Skill loading/compliance is probabilistic, while `@mention`-ing a sub-agent guarantees its system prompt is loaded.
-- `vectl` is the spine. Before it, I managed plans in Markdown—one project ballooned to 10k+ lines, burning tokens without enforcement. With `vectl`, the plan becomes a state machine: agents must `claim` steps and submit `evidence`. Strongly recommended.
-- The learning curve is brutal. You will rage-quit. Then something clicks—you stop fixing code and start fixing the system that produces code. That click is the real skill. No tutorial can give it to you; you have to burn tokens to earn it.
+- The biggest cost of agentic coding isn't writing code—it's **control cost**: making agents work your way, not theirs.
+- I don't write implementation code or do code review. I write specs, manage plans, and trace root causes when things go wrong. I fix the production line, not the bugs.
+- `vectl` is the spine—it turns plans into state machines with `claim`/`evidence` enforcement. Without it, plans are suggestions agents ignore.
+- I run a virtual org chart: separate agents for architecture, engineering, QA, and review—with adversarial debates to break decision paralysis.
+- The learning curve is brutal. The real skill isn't prompting—it's learning to debug the system that produces code, not the code itself.
 
 ---
 
@@ -250,9 +250,9 @@ As a daily habit, I have one simple rule: any repetitive task that takes more th
 
 ## Chapter 2: Process Engineering — Spec, Plan, vectl
 
-If you take only one habit from this post, take this: **use `vectl` and the two "meta-agents" (`architect` + `llm-agent-expert`).** These three things changed my workflow more than anything else. vectl gives you enforceable plans; the meta-agents give you the ability to generate new agents and diagnose failures systematically.
+This chapter covers the three things that changed my workflow more than anything else: enforceable plans (`vectl`), detailed specs, and the two "meta-agents" that help me build everything else (`architect` + `llm-agent-expert`—covered in the next chapter).
 
-And for large projects, don't start implementing—write the Spec first, as detailed as possible.
+For large projects, don't start implementing—write the Spec first, as detailed as possible.
 
 This sounds like a platitude, but it directly counters the agent's core failure mode: filling in details when uncertain, then treating the fill-in as fact. If you don't write the spec in detail, the agent will write it for you—and what you get isn't engineering, it's fiction.
 
