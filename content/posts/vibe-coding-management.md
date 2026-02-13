@@ -45,7 +45,7 @@ Here is the system I've built, and more importantly, the pain that forced me to 
 
 The transition wasn't linear; it was a series of frustrations.
 
-1.  **Pre-2025 (The Copilot Era)**: Using IDE extensions like Cursor. I was still writing code; AI was just a smarter autocomplete.
+1.  **Until Late 2025 (The Copilot Era)**: Using IDE extensions like Cursor. I was still writing code; AI was just a smarter autocomplete.
     *   *The Friction*: I wanted to refactor a messy module, but the AI lost context after 3 files. I found myself pasting snippets back and forth. I was a **secretary for the LLM**.
 2.  **Claude Code (Late 2025)**: The inflection point. With the release of **Claude Opus 4.5, GPT 5.2, and Gemini 3 Pro**, model capabilities finally crossed the "fully managed" threshold. **I closed my IDE and started coding exclusively through agents.**
 3.  **OpenCode + oh-my-opencode**: I switched to open-source solutions to gain control.
