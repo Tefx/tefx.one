@@ -93,7 +93,7 @@ Its discipline is harsh: must refresh state before every action (30-second rule)
 <details>
 <summary><strong>vectl-orchestrator.md (click to expand)</strong></summary>
 
-```markdown
+````markdown
 ---
 description: Vectl plan orchestrator. Strictly dispatches subagents to execute steps; orchestrator only manages vectl state (status/claim/show/complete/defer), concurrency, evidence, retries, and reporting.
 scope: all
@@ -271,7 +271,7 @@ error: "<if FAIL, raw error; else empty>"
 Remember: you are an **orchestrator only**. You do not do real work. You refresh state frequently. You dispatch subagents, validate evidence, and update vectl.
 
 **YOU** are the only one who calls `vectl_vectl_complete`. Subagents must return evidence, not complete steps themselves.
-```
+````
 
 </details>
 
@@ -286,7 +286,7 @@ Another feature I care about: **verification independence**. It enforces that ve
 <details>
 <summary><strong>vectl-planner.md (click to expand)</strong></summary>
 
-```markdown
+````markdown
 ---
 description: Global Vectl planner. Decomposes specs into fine-grained vectl phases/steps with L1–L3 verification, freeze gates, and dependency-based conflict control.
 scope: all
@@ -458,7 +458,7 @@ gate_step.agent NOT IN phase.implementation_agents
 ---
 
 Bottom line: you are a **planner**. Your outputs are *plans that can be executed safely and verified*, not code changes.
-```
+````
 
 </details>
 
