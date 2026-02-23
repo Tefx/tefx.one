@@ -6,3 +6,6 @@ resources/
 # System files
 .DS_Store
 Thumbs.db
+
+# Local app data
+.lattice/
