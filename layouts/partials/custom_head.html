@@ -1,30 +1,14 @@
-<!-- Font loading (Google Fonts) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Self-hosted fonts -->
+<link rel="preload" href="{{ "fonts/geist-sans.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/geist-sans-italic.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/maple-mono.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/maple-mono-italic.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 <!-- Global Custom CSS -->
-<link rel="stylesheet" href="{{ "css/custom.css" | relURL }}?v=5">
+<link rel="stylesheet" href="{{ "css/custom.css" | relURL }}?v=7">
 
-<!-- Typewriter cursor style (Only on Home) -->
+<!-- Typewriter JS (Only on Home) -->
 {{ if .IsHome }}
-<style>
-.slogan {
-  margin: 0 0 1em 0;
-  font-size: 0.9em;
-  color: #666;
-  min-height: 1.2em;
-}
-.cursor {
-  animation: blink 1s step-end infinite;
-  font-weight: normal;
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-</style>
-
 <script src="{{ "js/typewriter.js" | relURL }}?v=3" defer></script>
 {{ end }}
 

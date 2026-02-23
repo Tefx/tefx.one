@@ -1,29 +1,36 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-<p>
-  <i>
-    <time datetime='{{ .Date.Format "2006-01-02" }}'>
-      {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
-    </time>
-    <span id="busuanzi_container_page_pv" style="display: none;">
-      · <span id="busuanzi_value_page_pv"></span> Views
-    </span>
-  </i>
-</p>
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+    <p class="post-meta">
+      <time datetime='{{ .Date.Format "2006-01-02" }}'>
+        {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
+      </time>
+      <span id="busuanzi_container_page_pv" class="post-views" style="display: none;">
+        · <span id="busuanzi_value_page_pv"></span> views
+      </span>
+    </p>
+  </header>
 
-<content>
-  {{ .Content }}
-</content>
+  <div class="post-content">
+    {{ .Content }}
+  </div>
 
-{{ if (.Param "enablePostNavigator")}}
-{{- partial "post_navigator.html" . -}}
-{{ end }}
-
-<p>
-  {{ range (.GetTerms "tags") }}
-  <a href="{{ .Permalink }}">#{{ .LinkTitle }}</a>
+  {{ if (.Param "enablePostNavigator")}}
+    {{- partial "post_navigator.html" . -}}
   {{ end }}
-</p>
 
-{{ partial "comments.html" . }}
+  {{ $tags := .GetTerms "tags" }}
+  {{ if gt (len $tags) 0 }}
+  <footer class="post-footer">
+    <p class="post-tags">
+      {{ range $tags }}
+      <a href="{{ .Permalink }}" class="tag">#{{ .LinkTitle }}</a>
+      {{ end }}
+    </p>
+  </footer>
+  {{ end }}
+
+  {{ partial "comments.html" . }}
+</article>
 {{ end }}

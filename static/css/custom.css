@@ -1,82 +1,182 @@
+/* ========================================================================== */
+/* tefx.one — Custom styles                                                   */
+/* Aesthetic: Terminal-native research log                                    */
+/* Typography: Geist Sans (UI/body) + Maple Mono (code/terminal)              */
+/* ========================================================================== */
+
+/* --- Fonts (self-hosted, woff2) ------------------------------------------- */
+@font-face {
+  font-family: "Geist Sans";
+  src: url("/fonts/geist-sans.var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Sans";
+  src: url("/fonts/geist-sans-italic.var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Maple Mono";
+  src: url("/fonts/maple-mono.var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Maple Mono";
+  src: url("/fonts/maple-mono-italic.var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* --- Design tokens (Nord) ------------------------------------------------- */
 :root {
-  /* --- Color Palette (Nord) --- */
-  --bg: #ECEFF4;          /* Nord6 */
-  --text: #2E3440;        /* Nord0 */
-  --accent: #5E81AC;      /* Nord10 */
-  --accent-hover: #81A1C1;/* Nord9 */
-  --code-bg: #E5E9F0;     /* Nord5 */
-  --header-text: #2E3440;
+  --bg: #ECEFF4;               /* Nord6 */
+  --text: #2E3440;             /* Nord0 */
+  --muted: #4C566A;            /* Nord3 */
+  --accent: #5E81AC;           /* Nord10 */
+  --accent-hover: #81A1C1;     /* Nord9 */
+
+  --border: rgba(46, 52, 64, 0.14);
+  --surface: rgba(255, 255, 255, 0.55);
+
+  /* Code blocks are always dark (monokai tokens expect dark bg) */
+  --code-bg: #3B4252;          /* Nord1 */
+  --code-fg: #D8DEE9;          /* Nord4 */
+
+  --radius: 10px;
+  --shadow: 0 10px 22px rgba(46, 52, 64, 0.08);
+
+  --font-sans: "Geist Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  --container-max: 860px;
+  --post-measure: 72ch;
+  --post-font-size: clamp(1.05rem, 1.0rem + 0.3vw, 1.125rem);
+  --post-line-height: 1.7;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #2E3440;        /* Nord0 */
-    --text: #ECEFF4;      /* Nord6 */
-    --accent: #88C0D0;    /* Nord8 */
-    --accent-hover: #81A1C1; /* Nord9 */
-    --code-bg: #3B4252;   /* Nord1 */
-    --header-text: #ECEFF4;
+    --bg: #2E3440;             /* Nord0 */
+    --text: #ECEFF4;           /* Nord6 */
+    --muted: rgba(236, 239, 244, 0.78);
+    --accent: #88C0D0;         /* Nord8 */
+    --accent-hover: #81A1C1;   /* Nord9 */
+
+    --border: rgba(236, 239, 244, 0.14);
+    --surface: rgba(59, 66, 82, 0.45); /* Nord1-ish */
+    --shadow: 0 12px 26px rgba(0,0,0,0.25);
   }
 }
 
-/* --- Typography --- */
+/* --- Base ---------------------------------------------------------------- */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  font-family: "Source Serif 4", ui-serif, Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  font-optical-sizing: auto;
-  line-height: 1.7;
-  max-width: 860px;
+  font-family: var(--font-sans);
+  font-size: 1rem; /* keep home/terminal compact; post scales separately */
+  line-height: 1.6;
+  max-width: var(--container-max);
   margin: auto;
   padding: 2rem 1rem;
   background: var(--bg);
   color: var(--text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6, .title, .slogan, nav a {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  font-optical-sizing: auto;
-  letter-spacing: -0.01em;
+/* Keep emphasis crisp but not shouty */
+strong,
+b {
+  font-weight: 600;
 }
 
-h1 { font-weight: 600; margin-bottom: 0.5rem; }
-h2 { font-weight: 600; }
+main {
+  line-height: inherit;
+}
 
-/* Make bold text less shouty in serif body */
-strong, b { font-weight: 600; }
+::selection {
+  background: rgba(136, 192, 208, 0.35);
+}
 
-/* Links */
+/* Links: clean globally; underline only in article content */
 a {
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px dotted var(--accent);
-  transition: all 0.2s ease;
+  transition: color 0.15s ease;
 }
 
 a:hover {
   color: var(--accent-hover);
-  border-bottom-style: solid;
 }
 
-/* Header */
+a:focus-visible,
+summary:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* --- Header -------------------------------------------------------------- */
 header {
   margin-bottom: 3.5rem;
   border-bottom: 2px solid var(--accent);
   padding-bottom: 1.75rem;
 }
 
-/* Cursor */
+.site-title {
+  text-decoration: none;
+  color: inherit;
+}
+
+.site-title:hover {
+  text-decoration: none;
+}
+
+.site-name {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-size: 1.55rem;
+}
+
+.slogan {
+  margin: 0 0 1em 0;
+  font-size: 0.95em;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+
 .cursor {
   color: var(--accent-hover);
+  animation: blink 1s step-end infinite;
   font-weight: 400;
+  margin-left: 0.05em;
 }
 
-/* Metadata */
-time {
-  opacity: 0.75;
-  font-family: ui-monospace, monospace;
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-/* --- Terminal List (Nord) --- */
+nav a {
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+/* --- Terminal List (Home) ------------------------------------------------ */
 .terminal-container {
   margin-top: 2rem;
 }
@@ -86,17 +186,14 @@ time {
 }
 
 .cmd-prompt {
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
   margin-bottom: 1rem;
-  color: #4C566A; /* Nord3 */
+  color: var(--muted);
   font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
 }
 
-@media (prefers-color-scheme: dark) {
-  .cmd-prompt { color: #D8DEE9; }
-}
-
-.cmd-prompt .user { color: var(--accent-hover); font-weight: 800; }
+.cmd-prompt .user { color: var(--accent-hover); font-weight: 600; }
 .cmd-prompt .at { opacity: 0.75; }
 .cmd-prompt .host { color: var(--accent); }
 .cmd-prompt .path { color: #A3BE8C; } /* Nord14 */
@@ -105,7 +202,8 @@ time {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .terminal-item {
@@ -122,14 +220,10 @@ time {
 .terminal-item:last-child { border-bottom: none; }
 
 .perms {
-  color: #4C566A;
+  color: var(--muted);
   font-size: 0.8rem;
   margin-right: 1rem;
   display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  .perms { color: #D8DEE9; }
 }
 
 .size {
@@ -141,23 +235,19 @@ time {
 }
 
 .date {
-  color: #4C566A;
+  color: var(--muted);
   width: 4rem;
   margin-right: 1rem;
   font-size: 0.9rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .date { color: #D8DEE9; }
-}
-
-.terminal-item .title {
+.terminal-item .terminal-title {
   flex-grow: 1;
-  border-bottom: none;
   color: var(--text);
+  text-decoration: none;
 }
 
-.terminal-item .title:hover {
+.terminal-item .terminal-title:hover {
   color: var(--accent-hover);
   background-color: rgba(136, 192, 208, 0.10);
 }
@@ -169,30 +259,241 @@ time {
   padding: 2px 6px;
   border-radius: 3px;
   margin-left: 0.5rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 @media (min-width: 600px) {
   .perms { display: inline-block; }
 }
 
-/* --- Code Blocks (Always Dark — monokai tokens need dark bg) --- */
-div.highlight, pre {
-  background: #3B4252 !important;   /* Nord1 — always dark */
-  color: #D8DEE9 !important;        /* Nord4 — always light text */
+/* --- Post Layout --------------------------------------------------------- */
+.post {
+  max-width: var(--post-measure);
+  margin: 0 auto;
+  font-size: var(--post-font-size);
+  line-height: var(--post-line-height);
+}
+
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-title {
+  margin: 0 0 0.35rem 0;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-size: clamp(2.05rem, 1.65rem + 1.3vw, 2.75rem);
+}
+
+.post-meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.post-content a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.post-content a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.post-content h2 {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(136, 192, 208, 0.25);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.55rem, 1.35rem + 0.8vw, 1.9rem);
+}
+
+.post-content h2:first-of-type {
+  margin-top: 2rem;
+  border-top: none;
+  padding-top: 0;
+}
+
+.post-content h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  font-size: 1.25em;
+}
+
+.post-content p {
+  margin-bottom: 1.15em;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 1.2em;
+}
+
+.post-content li {
+  margin: 0.4em 0;
+}
+
+.post-footer {
+  margin-top: 2.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-tags {
+  margin: 0;
+}
+
+.tag {
+  display: inline-block;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.tag:hover {
+  border-color: rgba(136, 192, 208, 0.35);
+  background: rgba(136, 192, 208, 0.08);
+  color: var(--text);
+}
+
+/* --- Blockquotes --------------------------------------------------------- */
+.post-content blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  background: rgba(136, 192, 208, 0.06);
+  border-radius: 0 6px 6px 0;
+}
+
+.post-content blockquote p { margin-bottom: 0.6em; }
+.post-content blockquote p:last-child { margin-bottom: 0; }
+
+/* --- Details/Summary ----------------------------------------------------- */
+.post-content details {
+  margin: 1.5rem 0;
+  border: 1px solid rgba(136, 192, 208, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.post-content summary {
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(136, 192, 208, 0.06);
+  transition: background 0.2s ease;
+  list-style: none;
+}
+
+.post-content summary::-webkit-details-marker { display: none; }
+
+.post-content summary::before {
+  content: "▸ ";
+  display: inline;
+}
+
+.post-content details[open] > summary::before { content: "▾ "; }
+
+.post-content summary:hover { background: rgba(136, 192, 208, 0.12); }
+
+.post-content details > *:not(summary) {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.post-content details > div.highlight,
+.post-content details > pre {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  border-radius: 0 0 8px 8px !important;
+}
+
+/* Hide traffic light dots inside details blocks */
+.post-content details div.highlight::before,
+.post-content details pre::before {
+  content: none !important;
+}
+
+/* --- Tables -------------------------------------------------------------- */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.post-content th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.post-content td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(136, 192, 208, 0.15);
+}
+
+.post-content tr:last-child td { border-bottom: none; }
+
+/* --- Images -------------------------------------------------------------- */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2rem auto;
+  display: block;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-content img { box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+}
+
+/* --- Code blocks (Always dark) ------------------------------------------ */
+div.highlight,
+pre {
+  background: var(--code-bg) !important;
+  color: var(--code-fg) !important;
   padding: 1.25rem 1.25rem 1.1rem 1.25rem !important;
-  border-radius: 10px !important;
+  border-radius: var(--radius) !important;
   overflow-x: auto;
   position: relative !important;
   margin: 2rem 0 !important;
   border: 1px solid rgba(46, 52, 64, 0.10);
-  box-shadow: 0 10px 22px rgba(46, 52, 64, 0.08);
+  box-shadow: var(--shadow);
+  tab-size: 2;
 }
 
 @media (prefers-color-scheme: dark) {
-  div.highlight, pre {
+  div.highlight,
+  pre {
     border-color: rgba(236, 239, 244, 0.10);
-    box-shadow: 0 12px 26px rgba(0,0,0,0.25);
   }
 }
 
@@ -206,7 +507,8 @@ div.highlight pre {
 }
 
 /* Window controls */
-div.highlight::before, pre::before {
+div.highlight::before,
+pre::before {
   content: "";
   display: block;
   width: 10px;
@@ -224,180 +526,49 @@ div.highlight::before, pre::before {
 div.highlight pre::before { content: none !important; }
 
 code {
-  font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace !important;
+  font-family: var(--font-mono) !important;
   font-size: 0.92em;
-}
-
-p code, li code {
-  background: rgba(136, 192, 208, 0.18) !important;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
+  font-variant-ligatures: none;
 }
 
 pre code {
   background: transparent !important;
   padding: 0 !important;
   color: inherit !important;
+  line-height: 1.55;
 }
 
-/* --- Article Body Reading Enhancements --- */
-
-/* Chapter separators — h2 gets extra breathing room */
-article h2 {
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(136, 192, 208, 0.25);
+p code,
+li code {
+  background: rgba(136, 192, 208, 0.18) !important;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
 }
 
-article h2:first-of-type {
-  margin-top: 2rem;
-  border-top: none;
-}
-
-/* h3 section spacing */
-article h3 {
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-}
-
-/* Paragraphs — slightly tighter for long-form */
-article p {
-  margin-bottom: 1.15em;
-}
-
-/* --- Blockquotes (Dialogue Style) --- */
-blockquote {
-  border-left: 3px solid var(--accent);
-  margin: 1.5rem 0;
-  padding: 0.5rem 1.25rem;
-  background: rgba(136, 192, 208, 0.06);
-  border-radius: 0 6px 6px 0;
-}
-
-blockquote p {
-  margin-bottom: 0.6em;
-}
-
-blockquote p:last-child {
-  margin-bottom: 0;
-}
-
-/* --- Details/Summary (Collapsible Blocks) --- */
-details {
-  margin: 1.5rem 0;
-  border: 1px solid rgba(136, 192, 208, 0.2);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-summary {
-  cursor: pointer;
-  padding: 0.75rem 1.25rem;
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--accent);
-  background: rgba(136, 192, 208, 0.06);
-  transition: background 0.2s ease;
-  list-style: none;
-}
-
-summary::-webkit-details-marker {
-  display: none;
-}
-
-summary::before {
-  content: "▸ ";
-  display: inline;
-  transition: transform 0.2s ease;
-}
-
-details[open] > summary::before {
-  content: "▾ ";
-}
-
-summary:hover {
-  background: rgba(136, 192, 208, 0.12);
-}
-
-details > *:not(summary) {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-details > div.highlight, details > pre {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-top: 0 !important;
-  border-radius: 0 0 8px 8px !important;
-}
-
-/* Hide traffic light dots inside details blocks */
-details div.highlight::before, details pre::before {
-  content: none !important;
-}
-
-/* --- Tables --- */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.92rem;
-}
-
-th {
-  text-align: left;
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
-  font-weight: 700;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 2px solid var(--accent);
-  color: var(--accent);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid rgba(136, 192, 208, 0.15);
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
-
-/* --- Images (napkin diagram etc.) --- */
-article img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 2rem auto;
-  display: block;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-
-@media (prefers-color-scheme: dark) {
-  article img {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  }
-}
-
-/* --- Strong emphasis in prose --- */
-article p strong, article li strong {
-  color: var(--accent);
-  font-weight: 700;
-}
-
-@media (prefers-color-scheme: dark) {
-  article p strong, article li strong {
-    color: #88C0D0;
-  }
-}
-
-/* --- Horizontal rules --- */
-article hr {
+/* --- Horizontal rules ---------------------------------------------------- */
+.post-content hr {
   border: none;
   height: 1px;
   background: rgba(136, 192, 208, 0.25);
   margin: 2.5rem 0;
+}
+
+/* --- Footer -------------------------------------------------------------- */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px dashed var(--border);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.social-links { margin-bottom: 0.5rem; }
+.social-links a { font-weight: 600; }
+.separator { margin: 0 0.5rem; opacity: 0.5; }
+.copyright { opacity: 0.6; font-size: 0.8rem; }
+
+/* --- Reduced motion ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+  * { scroll-behavior: auto !important; transition-duration: 0ms !important; }
 }
