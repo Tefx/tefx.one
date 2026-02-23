@@ -7,7 +7,7 @@
 /* --- Fonts (self-hosted, woff2) ------------------------------------------- */
 @font-face {
   font-family: "Geist Sans";
-  src: url("/fonts/geist-sans.var.woff2") format("woff2");
+  src: url("/fonts/geist-sans.var.v1.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -15,7 +15,7 @@
 
 @font-face {
   font-family: "Geist Sans";
-  src: url("/fonts/geist-sans-italic.var.woff2") format("woff2");
+  src: url("/fonts/geist-sans-italic.var.v1.woff2") format("woff2");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -23,7 +23,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("/fonts/maple-mono.var.woff2") format("woff2");
+  src: url("/fonts/maple-mono.var.v1.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -31,7 +31,7 @@
 
 @font-face {
   font-family: "Maple Mono";
-  src: url("/fonts/maple-mono-italic.var.woff2") format("woff2");
+  src: url("/fonts/maple-mono-italic.var.v1.woff2") format("woff2");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;

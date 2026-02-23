@@ -37,7 +37,7 @@ In the previous post ("My Agentic Coding Stack and Workflow"), I described how I
 
 If control is unstable, what you get isn't productivity—it's a random walk process that happens to emit code. It might look like a genius for 20 minutes, then quietly dismantle your architecture by hour three.
 
-So this isn't a tool tutorial. It's an engineering field report. I'm sharing why I upgraded `vectl` into a control plane, why I started building a memory system, why I need a "tavern" for multi-round agent dialogue, and why I started assigning models by role rather than by benchmark rankings.
+So this isn't a tool tutorial. It's an engineering field report. I'm sharing why I upgraded [`vectl`](https://github.com/Tefx/vectl) into a control plane, why I started building a memory system, why I need a "tavern" for multi-round agent dialogue, and why I started assigning models by role rather than by benchmark rankings.
 
 ## 1. Acceptance Criteria: From "Works" to "Works for Hours"
 
